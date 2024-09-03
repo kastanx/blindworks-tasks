@@ -18,8 +18,6 @@ async function bootstrap() {
     .setTitle('Doctor API')
     .setDescription('API for managing tasks')
     .setVersion('1.0')
-    .addTag('tasks')
-    .addTag('mobile-app')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
