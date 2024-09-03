@@ -5,11 +5,14 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task, TaskDocument } from './task.entity';
 import { TaskGeneratorService } from './task.generator.service';
+import { TaskInstance, TaskInstanceDocument } from './task.instance.entity';
 
 @Injectable()
 export class TasksService {
   constructor(
     @InjectModel(Task.name) private taskModel: Model<TaskDocument>,
+    @InjectModel(TaskInstance.name)
+    private taskInstance: Model<TaskInstanceDocument>,
     private taskGeneratorService: TaskGeneratorService,
   ) {}
 
@@ -69,5 +72,7 @@ export class TasksService {
     if (result.deletedCount === 0) {
       throw new NotFoundException(`Task with ID "${id}" not found`);
     }
+
+    await this.taskInstance.deleteMany({ taskId: id }).exec();
   }
 }
